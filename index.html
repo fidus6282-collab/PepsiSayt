@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEPSI • Shakar Ta'siri — Sog'ligingizni Bilib Oling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pepsi-blue: #004b93;
+            --pepsi-red: #e32934;
+            --pepsi-light: #74caff;
+            --dark-bg: #0a0e1a;
+            --gradient-start: #001f3f;
+            --gradient-end: #0a0e1a;
+            --sugar-yellow: #ffd700;
+            --danger-red: #ff3333;
+            --warning-orange: #ff9500;
+            --safe-green: #00d084;
+            --text-light: #e8edf5;
+            --text-muted: #9ca8bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background bubbles */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: radial-gradient(circle, rgba(116, 202, 255, 0.15), rgba(0, 75, 147, 0.05));
+            border-radius: 50%;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            to {
+                bottom: 110%;
+                transform: translateX(100px);
+            }
+        }
+
+        .bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 15s; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 120px; height: 120px; left: 25%; animation-duration: 20s; animation-delay: 3s; }
+        .bubble:nth-child(3) { width: 60px; height: 60px; left: 45%; animation-duration: 12s; animation-delay: 1s; }
+        .bubble:nth-child(4) { width: 100px; height: 100px; left: 65%; animation-duration: 18s; animation-delay: 5s; }
+        .bubble:nth-child(5) { width: 70px; height: 70px; left: 80%; animation-duration: 14s; animation-delay: 2s; }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, var(--pepsi-blue), var(--pepsi-light), var(--pepsi-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 60px rgba(116, 202, 255, 0.4);
+        }
+
+        .subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Main Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(0, 75, 147, 0.2), rgba(10, 14, 26, 0.4));
+            border: 2px solid rgba(116, 202, 255, 0.3);
+            border-radius: 30px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+            color: var(--pepsi-light);
+        }
+
+        /* Slider Container */
+        .slider-container {
+            margin: 40px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .slider-label span {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .slider-value {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--sugar-yellow);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 12px;
+            border-radius: 10px;
+            background: linear-gradient(to right, var(--safe-green) 0%, var(--warning-orange) 50%, var(--danger-red) 100%);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--sugar-yellow);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            transition: all 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 1);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--sugar-yellow);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            border: none;
+            transition: all 0.3s;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(116, 202, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 75, 147, 0.4);
+            border-color: var(--pepsi-light);
+        }
+
+        .stat-value {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Danger Level Indicator */
+        .danger-indicator {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 2px solid;
+            text-align: center;
+            transition: all 0.5s;
+        }
+
+        .danger-level {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .danger-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Info Sections */
+        .info-section {
+            background: rgba(0, 75, 147, 0.1);
+            border-left: 5px solid var(--pepsi-blue);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .info-section h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--pepsi-light);
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .info-section li:before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            color: var(--warning-orange);
+        }
+
+        /* Facts Grid */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .fact-card {
+            background: linear-gradient(135deg, rgba(116, 202, 255, 0.1), rgba(0, 75, 147, 0.05));
+            border: 1px solid rgba(116, 202, 255, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(116, 202, 255, 0.3);
+            background: linear-gradient(135deg, rgba(116, 202, 255, 0.2), rgba(0, 75, 147, 0.1));
+        }
+
+        .fact-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .fact-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--pepsi-light);
+        }
+
+        .fact-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            margin: 50px 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--pepsi-blue), rgba(0, 75, 147, 0.8));
+        }
+
+        th {
+            padding: 20px;
+            text-align: left;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(116, 202, 255, 0.1);
+            font-size: 1rem;
+        }
+
+        tbody tr {
+            transition: all 0.3s;
+        }
+
+        tbody tr:hover {
+            background: rgba(116, 202, 255, 0.1);
+        }
+
+        /* Tips Section */
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, rgba(0, 212, 132, 0.1), rgba(0, 75, 147, 0.05));
+            border: 2px solid var(--safe-green);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 132, 0.3);
+        }
+
+        .tip-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--safe-green);
+            margin-bottom: 10px;
+        }
+
+        .tip-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tip-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(116, 202, 255, 0.2);
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--pepsi-blue), var(--pepsi-red));
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .calculator-section {
+                padding: 35px 25px;
+            }
+            
+            .info-section {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Pulse animation for danger indicators */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1 class="logo">PEPSI</h1>
+            <div class="subtitle">Shakar Ta'siri • Sog'ligingizni Bilib Oling</div>
+            <p class="intro">
+                Pepsi ichimligidagi shakar ko'payganda nima bo'ladi? Interaktiv hisoblagich orqali shakar miqdori oshsa, 
+                sog'liqqa ta'siri qanday yomonlashishini ko'ring va ongli qaror qabul qiling.
+            </p>
+        </header>
+
+        <!-- Interactive Calculator -->
+        <section class="calculator-section">
+            <h2 class="section-title">🧪 Interaktiv Shakar Hisoblagich</h2>
+            
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>Shakar miqdori (gramm):</span>
+                    <span class="slider-value" id="sugarAmount">35</span>
+                </div>
+                <input type="range" min="0" max="100" value="35" class="slider" id="sugarSlider">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 10px; text-align: center;">
+                    ⓘ Bir banka Pepsi (330 ml) odatda ~35 g shakar o'z ichiga oladi
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="calories">140</div>
+                    <div class="stat-label">Kaloriya</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="teaspoons">9</div>
+                    <div class="stat-label">Choy qoshiq</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="percentDaily">70%</div>
+                    <div class="stat-label">Kunlik norma</div>
+                </div>
+            </div>
+
+            <div class="danger-indicator" id="dangerLevel">
+                <div class="danger-level" id="dangerTitle">O'RTACHA XAVF</div>
+                <div class="danger-description" id="dangerDesc">
+                    Energiya sakrashi, keyin tushish. Iste'molni cheklash kerak.
+                </div>
+            </div>
+        </section>
+
+        <!-- Why It Matters -->
+        <section class="info-section">
+            <h3>❗ Nega bu muhim?</h3>
+            <ul>
+                <li><strong>Qisqa muddatli ta'sir:</strong> Qonda glyukoza keskin ko'tariladi, keyin tez tushadi → charchoq, bosh og'rig'i, konsentratsiya buzilishi</li>
+                <li><strong>Tish sog'ligi:</strong> Shakar bakteriyalar uchun ozuqa, tish emali yemiriladi, kariyes xavfi ortadi</li>
+                <li><strong>Vazn ortishi:</strong> Ortiqcha kaloriya yog' to'g'onida saqlanadi, semirish va metabolizm buzilishiga olib keladi</li>
+                <li><strong>Insulin qarshiligi:</strong> Doimiy yuqori shakar iste'moli tanani insulinga sezgir bo'lmay qoldiradi → 2-tip diabet xavfi</li>
+                <li><strong>Yurak-qon tomir kasalliklari:</strong> Ko'p shakar qon bosimini oshiradi, yurak kasalliklari xavfini 2 barobarga ko'paytiradi</li>
+            </ul>
+        </section>
+
+        <!-- Health Impact Facts -->
+        <h2 class="section-title" style="margin-top: 80px;">💡 Shakar Ta'siri: Faktlar</h2>
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-icon">🧠</div>
+                <div class="fact-title">Miya Funksiyasi</div>
+                <div class="fact-text">
+                    Ko'p shakar xotira va o'rganish qobiliyatini susaytiradi. Tadqiqotlar shuni ko'rsatadiki, 
+                    yuqori shakarli dietada turgan odamlar kognitiv testlarda pastroq natija ko'rsatadilar.
+                </div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">⚡</div>
+                <div class="fact-title">Energiya Inqirozi</div>
+                <div class="fact-text">
+                    Shakar iste'mol qilingandan 30 daqiqa o'tgach energiya keskin ortadi, lekin 1-2 soatdan keyin 
+                    "crash" yuzaga keladi — haddan tashqari charchoq va hushyorlik pasayishi.
+                </div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🦷</div>
+                <div class="fact-title">Tish Emali</div>
+                <div class="fact-text">
+                    Har bir Pepsi og'iz bo'shlig'ini 20 daqiqagacha kislota muhitiga aylantiradi. 
+                    Bu esa tish emalini yumshatadi va kariyes xavfini 3 barobarga oshiradi.
+                </div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">💪</div>
+                <div class="fact-title">Metabolizm</div>
+                <div class="fact-text">
+                    Kuniga 1 banka Pepsi yiliga 7 kg vazn ortishiga sabab bo'lishi mumkin. 
+                    Shakar metabolizmni sekinlashtiradi va yog' yonishini to'xtatadi.
+                </div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">❤️</div>
+                <div class="fact-title">Yurak Sog'ligi</div>
+                <div class="fact-text">
+                    Har kuni shakarli ichimlik ichish yurak xurujiga chalinish xavfini 31% ga oshiradi. 
+                    Shakar qon tomirlarini shikastlaydi va yallig'lanishni kuchaytiradi.
+                </div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🩸</div>
+                <div class="fact-title">Qon Shakari</div>
+                <div class="fact-text">
+                    Pepsi ichgandan keyin qon shakarida keskin sakrash insulinni haddan tashqari ishga tushiradi. 
+                    Bu uzoq muddatda diabetga olib kelishi mumkin.
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <h2 class="section-title" style="margin-top: 80px;">📊 Shakar Miqdori Taqqoslash</h2>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ichimlik</th>
+                        <th>Hajm</th>
+                        <th>Shakar (g)</th>
+                        <th>Kaloriya</th>
+                        <th>Xavf Darajasi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🥤 Pepsi (1 banka)</td>
+                        <td>330 ml</td>
+                        <td>35 g</td>
+                        <td>140 kcal</td>
+                        <td style="color: var(--warning-orange);">⚠️ O'rtacha</td>
+                    </tr>
+                    <tr>
+                        <td>🥤 Pepsi (1.5L)</td>
+                        <td>1500 ml</td>
+                        <td>159 g</td>
+                        <td>636 kcal</td>
+                        <td style="color: var(--danger-red);">🚨 Juda yuqori</td>
+                    </tr>
+                    <tr>
+                        <td>🧃 Meva sharbati</td>
+                        <td>250 ml</td>
+                        <td>24 g</td>
+                        <td>100 kcal</td>
+                        <td style="color: var(--warning-orange);">⚠️ O'rtacha</td>
+                    </tr>
+                    <tr>
+                        <td>☕ Qo'shimcha shakarli kofe</td>
+                        <td>300 ml</td>
+                        <td>30 g</td>
+                        <td>200 kcal</td>
+                        <td style="color: var(--warning-orange);">⚠️ O'rtacha</td>
+                    </tr>
+                    <tr>
+                        <td>💧 Toza suv</td>
+                        <td>500 ml</td>
+                        <td>0 g</td>
+                        <td>0 kcal</td>
+                        <td style="color: var(--safe-green);">✅ Xavfsiz</td>
+                    </tr>
+                    <tr>
+                        <td>🍵 Shakarli choy</td>
+                        <td>200 ml</td>
+                        <td>5 g</td>
+                        <td>20 kcal</td>
+                        <td style="color: var(--safe-green);">✅ Kam</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Health Recommendations -->
+        <h2 class="section-title" style="margin-top: 80px;">💚 Sog'lom Tanlov: Maslahatlar</h2>
+        <div class="tips-container">
+            <div class="tip-card">
+                <div class="tip-number">01</div>
+                <div class="tip-title">Suv Iching</div>
+                <div class="tip-text">
+                    Pepsi o'rniga toza suv iching. Agar ta'm kerak bo'lsa, suvga limon, bodiring yoki yalpiz qo'shing. 
+                    Bu kaloriyasiz va foydali.
+                </div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-number">02</div>
+                <div class="tip-title">Miqdorni Kamaytiring</div>
+                <div class="tip-text">
+                    Agar Pepsi ichishni to'xtata olmasangiz, miqdorini kamaytiring. Katta shishadan kichik bankaga 
+                    o'ting yoki haftada faqat 1-2 marta iching.
+                </div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-number">03</div>
+                <div class="tip-title">Alternativalarni Sinab Ko'ring</div>
+                <div class="tip-text">
+                    Gazlangan mineral suv, shakar qo'shilmagan qora choy, yashil choy, yoki uy sharoitida tayyorlangan 
+                    tabiiy limonad yaxshi alternativalar.
+                </div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-number">04</div>
+                <div class="tip-title">Yorliqni O'qing</div>
+                <div class="tip-text">
+                    Har doim mahsulot yorlig'idagi shakar miqdorini tekshiring. "Shakar yo'q" degan yozuv ham 
+                    sun'iy tatlandiruvchilar borligini anglatishi mumkin.
+                </div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-number">05</div>
+                <div class="tip-title">Bosqichma-Bosqich</div>
+                <div class="tip-text">
+                    To'satdan butunlay tashlab yuborish qiyin. Asta-sekin kamaytiring: haftada 5 bankadan 3 ga, 
+                    keyin 1 ga tushiring.
+                </div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-number">06</div>
+                <div class="tip-title">Tishlaringizni Himoya Qiling</div>
+                <div class="tip-text">
+                    Agar Pepsi ichsangiz, keyin og'zingizni suv bilan chayib oling yoki tishingizni yuvib oling. 
+                    Bu kislota ta'sirini kamaytirishga yordam beradi.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scientific Info -->
+        <section class="info-section" style="margin-top: 60px; border-left-color: var(--pepsi-red);">
+            <h3>🔬 Ilmiy Ma'lumotlar</h3>
+            <p style="margin-bottom: 20px; font-size: 1.05rem; line-height: 1.8;">
+                <strong>Jahon Sog'liqni Saqlash Tashkiloti (WHO)</strong> kuniga 25-50 gramm (6-12 choy qoshiq) shakar tavsiya qiladi. 
+                Bir banka Pepsi allaqachon bu me'yorning 70% ini o'z ichiga oladi.
+            </p>
+            <p style="margin-bottom: 20px; font-size: 1.05rem; line-height: 1.8;">
+                Harvard tibbiyot maktabi tadqiqotlari shuni ko'rsatadiki, kuniga 1-2 banka shakarli ichimlik ichish:
+            </p>
+            <ul style="margin-left: 20px;">
+                <li>26% ga 2-tip diabet xavfini oshiradi</li>
+                <li>35% ga yurak xurujiga chalinish xavfini oshiradi</li>
+                <li>16% ga erta o'lim xavfini oshiradi</li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-text">
+                Bu loyiha faqat ta'lim maqsadida yaratilgan. Maqsad — odamlarni sog'lom tanlov qilishga undash.
+            </p>
+            <p class="footer-text">
+                Ma'lumotlar: WHO, Harvard Medical School, American Heart Association
+            </p>
+            <div class="footer-badge">
+                HTML + CSS + JavaScript • Demo Loyiha • 2025
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Get elements
+        const slider = document.getElementById('sugarSlider');
+        const sugarAmount = document.getElementById('sugarAmount');
+        const calories = document.getElementById('calories');
+        const teaspoons = document.getElementById('teaspoons');
+        const percentDaily = document.getElementById('percentDaily');
+        const dangerLevel = document.getElementById('dangerLevel');
+        const dangerTitle = document.getElementById('dangerTitle');
+        const dangerDesc = document.getElementById('dangerDesc');
+
+        // Update calculations
+        function updateStats() {
+            const sugar = parseInt(slider.value);
+            
+            // Update display
+            sugarAmount.textContent = sugar;
+            
+            // Calculate calories (1g sugar = 4 calories)
+            const cal = Math.round(sugar * 4);
+            calories.textContent = cal;
+            
+            // Calculate teaspoons (1 teaspoon = ~4g sugar)
+            const spoons = Math.round(sugar / 4);
+            teaspoons.textContent = spoons;
+            
+            // Calculate percentage of daily recommended (WHO: 50g max)
+            const percent = Math.round((sugar / 50) * 100);
+            percentDaily.textContent = percent + '%';
+            
+            // Update danger level
+            updateDangerLevel(sugar);
+            
+            // Update stat card colors
+            updateStatColors(sugar);
+        }
+
+        function updateDangerLevel(sugar) {
+            if (sugar <= 20) {
+                dangerLevel.style.borderColor = 'var(--safe-green)';
+                dangerLevel.style.background = 'rgba(0, 212, 132, 0.1)';
+                dangerTitle.style.color = 'var(--safe-green)';
+                dangerTitle.textContent = 'KAM XAVF ✅';
+                dangerDesc.textContent = 'Kam tasir. Vaqti-vaqti bilan istemol qilish mumkin, lekin suv yaxshiroq tanlov.';
+                dangerLevel.classList.remove('pulse');
+            } else if (sugar <= 40) {
+                dangerLevel.style.borderColor = 'var(--warning-orange)';
+                dangerLevel.style.background = 'rgba(255, 149, 0, 0.1)';
+                dangerTitle.style.color = 'var(--warning-orange)';
+                dangerTitle.textContent = 'O\'RTACHA XAVF ⚠️';
+                dangerDesc.textContent = 'Energiya sakrashi, keyin tushish. Kunlik norma yaqinida. Istemolni cheklash kerak.';
+                dangerLevel.classList.remove('pulse');
+            } else {
+                dangerLevel.style.borderColor = 'var(--danger-red)';
+                dangerLevel.style.background = 'rgba(255, 51, 51, 0.15)';
+                dangerTitle.style.color = 'var(--danger-red)';
+                dangerTitle.textContent = 'YUQORI XAVF 🚨';
+                dangerDesc.textContent = 'JUDA KO\'P SHAKAR! Vazn ortishi, tish va yurak muammolari, diabet xavfi keskin ortadi. Zudlik bilan kamaytirishni tavsiya qilamiz!';
+                dangerLevel.classList.add('pulse');
+            }
+        }
+
+        function updateStatColors(sugar) {
+            const statCards = document.querySelectorAll('.stat-value');
+            
+            if (sugar <= 20) {
+                statCards.forEach(card => {
+                    card.style.color = 'var(--safe-green)';
+                    card.style.textShadow = '0 0 20px rgba(0, 212, 132, 0.6)';
+                });
+            } else if (sugar <= 40) {
+                statCards.forEach(card => {
+                    card.style.color = 'var(--warning-orange)';
+                    card.style.textShadow = '0 0 20px rgba(255, 149, 0, 0.6)';
+                });
+            } else {
+                statCards.forEach(card => {
+                    card.style.color = 'var(--danger-red)';
+                    card.style.textShadow = '0 0 20px rgba(255, 51, 51, 0.6)';
+                });
+            }
+        }
+
+        // Event listener
+        slider.addEventListener('input', updateStats);
+
+        // Initialize
+        updateStats();
+
+        // Smooth scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fact-card, .tip-card, .info-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
